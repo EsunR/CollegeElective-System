@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from './components/login.vue'
-import register from './components/register.vue'
+import login from './components/Login.vue'
+import register from './components/Register.vue'
 
 
 

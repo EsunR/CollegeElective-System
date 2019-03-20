@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import global from '../common.vue'
+import global from './common.vue'
 import './plugins/element.js'
 
 // 将引入的全局设置文件绑定到Vue的COMMON属性上
