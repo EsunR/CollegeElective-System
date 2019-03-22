@@ -26,7 +26,7 @@ export default {
   box-sizing: border-box;
   border-bottom: 2px solid #121f28;
   .name {
-    background-color: #445eab;
+    background-color: #6C6FC0;
     width: 150px;
     height: 150px;
     border-radius: 150px;
@@ -35,7 +35,7 @@ export default {
     margin: 0 auto;
     font-size: 1.5rem;
     margin-bottom: 20px;
-    border: 5px solid #fff;
+    // border: 5px solid white;
     box-shadow: 0 5px 20px rgba(0,0,0,0.8);
   }
   .identity {

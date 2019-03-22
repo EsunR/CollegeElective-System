@@ -11,6 +11,8 @@ import studentCourse from './components/student/studentCourse.vue'
 // teacher
 import teacher from './components/teacher/teacher.vue'
 import teacherCourse from './components/teacher/teacherCourse.vue'
+import manageCourse from './components/teacher/manageCourse.vue'
+import manageGrade from './components/teacher/manageGrade.vue'
 
 
 //  admin
@@ -54,6 +56,14 @@ var router = new Router({
         {
           path: 'teacherCourse',
           component: teacherCourse
+        },
+        {
+          path: 'manageCourse',
+          component: manageCourse
+        },
+        {
+          path: 'manageGrade',
+          component: manageGrade
         }
       ]
     },
