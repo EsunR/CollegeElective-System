@@ -7,35 +7,48 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    getUserInfo(callback) {
+      // TODO: 获取身份
+      this.axios
+        .get("/userInfo")
+        .then(res => {
+          if (res.data.code == 1) {
+            this.$store.commit("setData", res.data.data);
+            callback();
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
+    }
+  },
+  mounted() {
+    // this.getUserInfo(() => {
+    //   switch (this.$store.state.identity) {
+    //     case "student":
+    //       this.router.push("/student/home");
+    //       break;
+    //     case "teacher":
+    //       this.router.push("/teacher/home");
+    //       break;
+    //     case "admin":
+    //       this.router.push("/admin/home");
+    //       break;
+    //   }
+    // });
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-</style>
-
-<style lang="scss">
-html {
-  height: 100%;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-}
-body {
-  height: 100%;
-  background-color: #f4f5f5 !important;
-  margin: 0;
-}
-.v-enter {
-  opacity: 0;
-  transform: translateX(100%);
-}
-.v-leave-to {
-  opacity: 0;
-  transform: translateX(-100%);
-  position: absolute;
-}
-.v-enter-active,
-.v-leave-active {
-  transition: all 1s ease;
+.card {
+  margin: 0 auto;
+  width: 900px;
+  position: relative;
+  top: 100px;
 }
 </style>
 

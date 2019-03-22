@@ -12,15 +12,40 @@
       <el-form-item label="账号" prop="account">
         <el-input v-model="registerForm.account"></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="name">
+
+      <el-form-item label="姓名" prop="name">
         <el-input v-model="registerForm.name"></el-input>
       </el-form-item>
+
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="registerForm.password"></el-input>
       </el-form-item>
+
       <el-form-item label="重复密码" prop="password2" required>
         <el-input type="password" v-model="registerForm.password2"></el-input>
       </el-form-item>
+
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="选择系别" prop="faculty">
+            <el-select style="width:95%" v-model="registerForm.faculty" placeholder="请选择系别">
+              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="入学时间" prop="enter_time">
+            <el-date-picker
+              style="width: 100%;"
+              v-model="registerForm.enter_time"
+              type="year"
+              placeholder="选择年"
+              value-format="yyyy"
+            ></el-date-picker>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-form-item class="btn_box">
         <el-button type="primary" @click="registerClick">注 册</el-button>
         <el-button type="info" @click="$router.push('/login')">返回登录</el-button>
@@ -46,7 +71,9 @@ export default {
         account: "",
         name: "",
         password: "",
-        password2: ""
+        password2: "",
+        faculty: "",
+        enter_time: ""
       },
       rules: {
         account: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -54,8 +81,19 @@ export default {
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
         password2: [
           { validator: validatePassword2, trigger: ["blur", "change"] }
+        ],
+        faculty: [
+          { required: true, message: "请选择系别", trigger: ["blur", "change"] }
+        ],
+        enter_time: [
+          {
+            required: true,
+            message: "请选择入学时间",
+            trigger: ["blur", "change"]
+          }
         ]
-      }
+      },
+      options: ["计算机", "数学", "艺术"]
     };
   },
   methods: {
@@ -65,7 +103,9 @@ export default {
           let obj = {
             account: this.registerForm.account,
             password: this.registerForm.password,
-            name: this.registerForm.name
+            name: this.registerForm.name,
+            faculty: this.registerForm.faculty,
+            enterTime: this.parseTime(this.registerForm.enter_time)
           };
           console.log(obj);
           // TODO: 接入注册API
@@ -86,7 +126,27 @@ export default {
           return false;
         }
       });
+    },
+    getFaculty() {
+      this.axios
+        .get("/getFaculty")
+        .then(res => {
+          if (res.data.code == 1) {
+            this.options = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("获取系别失败，服务器无法连接");
+        });
+    },
+    parseTime(year) {
+      let time_str = `${year}-09-01`;
+      return Date.parse(new Date(time_str));
     }
+  },
+  mounted() {
+    this.getFaculty();
   }
 };
 </script>

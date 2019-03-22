@@ -1,14 +1,85 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './components/Home.vue'
 // import global from './common.vue'
+import noFound from './components/noFound'
+
+// student
+import student from './components/student/student.vue'
+import studentCourse from './components/student/studentCourse.vue'
+
+
+// teacher
+import teacher from './components/teacher/teacher.vue'
+import teacherCourse from './components/teacher/teacherCourse.vue'
+
+
+//  admin
+import admin from './components/admin/admin.vue'
+import schoolInfo from './components/admin/schoolInfo.vue'
+import manageStudent from './components/admin/manageStudent.vue'
+import manageTeacher from './components/admin/manageTeacher.vue'
+import manageClassroom from './components/admin/manageClassroom.vue'
+
+
+
+
+
+
 Vue.use(Router)
 
 var router = new Router({
   routes: [
     // path name component
-    { path: '/', redirect: '/home' },
-    { path: '/home', name: 'home', component: Home }
+    {
+      path: '*',
+      name: 'noFound',
+      component: noFound
+    },
+    {
+      path: '/student',
+      redirect: '/student/studentCourse',
+      component: student,
+      children: [
+        {
+          path: 'studentCourse',
+          component: studentCourse
+        }
+      ]
+    },
+    {
+      path: '/teacher',
+      redirect: '/teacher/teacherCourse',
+      component: teacher,
+      children: [
+        {
+          path: 'teacherCourse',
+          component: teacherCourse
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      redirect: '/admin/schoolInfo',
+      component: admin,
+      children: [
+        {
+          path: 'schoolInfo',
+          component: schoolInfo
+        },
+        {
+          path: 'manageStudent',
+          component: manageStudent
+        },
+        {
+          path: 'manageTeacher',
+          component: manageTeacher
+        },
+        {
+          path: 'manageClassroom',
+          component: manageClassroom
+        }
+      ]
+    }
   ]
 })
 
