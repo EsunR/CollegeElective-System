@@ -6,7 +6,7 @@
         <div class="title">未结课课程</div>
         <div class="course_box">
           <div class="col" v-for="item in courseData" :key="item.id">
-            <div class="course" @click="chooseCourse = item.id">
+            <div class="course" @click="gotoCourseGrade(item.id)">
               <div class="group">
                 <div class="name">{{item.name}}</div>
               </div>
@@ -28,7 +28,7 @@
         <div class="title">已结课课程</div>
         <div class="course_box">
           <div class="col" v-for="item in courseData_finished" :key="item.id">
-            <div class="course" @click="chooseCourse = item.id">
+            <div class="course" @click="gotoCourseGrade(item.id)">
               <div class="group">
                 <div class="name">{{item.name}}</div>
               </div>
@@ -123,6 +123,43 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    // TODO: 获取教师已选课程
+    getTeacherCourse() {
+      this.axios
+        .get("/getTeacherCourse?id=" + this.$store.state.uid)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.courseData = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接，获取未结课课程失败");
+        });
+    },
+    // TODO: 获取教师未结课课程
+    getTeacherCourseFinished() {
+      this.axios
+        .get("/getTeacherCourseFinished?id=" + this.$store.state.uid)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.courseData_finished = res.data.data;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接，获取教师未结课课程失败");
+        });
+    },
+    gotoCourseGrade(id) {
+      this.$router.push("/teacher/manageGrade/" + id);
+    }
+  },
+  mounted() {
+    this.getTeacherCourse();
+    this.getTeacherCourseFinished();
   }
 };
 </script>
@@ -182,7 +219,7 @@ export default {
           .credit {
             margin-right: 10px;
           }
-          .semester{
+          .semester {
             padding-bottom: 5px;
             margin-bottom: 5px;
             border-bottom: 1px solid white;
