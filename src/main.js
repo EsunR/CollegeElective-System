@@ -46,12 +46,33 @@ Vue.filter('toWeek', function (value) {
   }
 })
 
-Vue.filter('proptype', function(value){
-  switch (value){
-    case '0': 
+Vue.filter('proptype', function (value) {
+  switch (value) {
+    case '0':
       return '选修';
     case '1':
       return '必修';
+  }
+})
+
+Vue.filter('semester', function (value) {
+  switch (value) {
+    case '1':
+      return '大一上学期';
+    case '2':
+      return '大一下学期';
+    case '3':
+      return '大二上学期';
+    case '4':
+      return '大二下学期';
+    case '5':
+      return '大三上学期';
+    case '6':
+      return '大三下学期';
+    case '7':
+      return '大四上学期';
+    case '8':
+      return '大四下学期';
   }
 })
 
