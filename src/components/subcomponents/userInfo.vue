@@ -5,7 +5,7 @@
       <span>{{$store.state.identity | identity}}</span>
     </div>
     <div class="account">学号/工号：{{$store.state.account}}</div>
-    <div class="account" v-if="$store.state.faculity != ''">系别：{{$store.state.faculity}}</div>
+    <div class="account" v-if="$store.state.faculty != ''">系别：{{$store.state.faculty}}</div>
   </div>
 </template>
 

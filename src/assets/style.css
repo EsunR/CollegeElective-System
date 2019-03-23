@@ -1,7 +1,7 @@
 html {
   height: 100%;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial,
+    sans-serif;
 }
 body {
   height: 100%;
@@ -23,7 +23,6 @@ body {
   transition: all 1s ease;
 }
 
-
 .card {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
@@ -33,36 +32,41 @@ body {
   margin-bottom: 20px;
 }
 
-h1{
+h1 {
   color: rgba(0, 0, 0, 0.6);
-  border-left: 5px solid rgba(0,0,0,0.6);
+  border-left: 5px solid rgba(0, 0, 0, 0.6);
   padding-left: 10px;
 }
 
-#app{
+hr {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+#app {
   height: 100%;
 }
-.full_screen{
+.full_screen {
   height: 100%;
 }
-.el-container, .el-aside{
+.el-container,
+.el-aside {
   height: 100%;
 }
-.el-main{
+.el-main {
   margin-left: 300px;
 }
-.el-aside{
+.el-aside {
   position: fixed;
 }
-.user_info{
+.user_info {
   height: 30%;
 }
-.nav_bar{
+.nav_bar {
   height: 70%;
 }
-.base_shadow{
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+.base_shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
-.light_shadow{
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+.light_shadow {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }

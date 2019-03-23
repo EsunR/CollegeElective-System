@@ -5,7 +5,7 @@
       <div class="left">
         <div class="card student" v-for="(item,index) in studentData" :key="item.id">
           <div class="info">
-            <div class="name">系别：{{item.faculity}}</div>
+            <div class="name">系别：{{item.faculty}}</div>
             <div class="account">学号：{{item.account}}</div>
             <el-button
               type="danger"
@@ -39,25 +39,25 @@ export default {
           id: "1",
           account: "122222223",
           name: "张三",
-          faculity: "计算机"
+          faculty: "计算机"
         },
         {
           id: "2",
           account: "123222222",
           name: "李四",
-          faculity: "计算机"
+          faculty: "计算机"
         },
         {
           id: "3",
           account: "12222223",
           name: "王麻子",
-          faculity: "计算机"
+          faculty: "计算机"
         },
         {
           id: "4",
           account: "12222223",
           name: "王麻子",
-          faculity: "计算机"
+          faculty: "计算机"
         }
       ],
       chartData: {

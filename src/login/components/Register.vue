@@ -29,10 +29,11 @@
         <el-col :span="12">
           <el-form-item label="选择系别" prop="faculty">
             <el-select style="width:95%" v-model="registerForm.faculty" placeholder="请选择系别">
-              <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+              <el-option v-for="item in faculty" :key="item.id" :label="item.name" :value="item.name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
+
         <el-col :span="12">
           <el-form-item label="入学时间" prop="enter_time">
             <el-date-picker
@@ -93,7 +94,20 @@ export default {
           }
         ]
       },
-      options: ["计算机", "数学", "艺术"]
+      faculty: [
+        {
+          id: "1",
+          name: "计算机"
+        },
+        {
+          id: "2",
+          name: "英语"
+        },
+        {
+          id: "3",
+          name: "艺术"
+        }
+      ],
     };
   },
   methods: {
@@ -132,7 +146,7 @@ export default {
         .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
-            this.options = res.data.data;
+            this.faculty = res.data.data;
           }
         })
         .catch(err => {

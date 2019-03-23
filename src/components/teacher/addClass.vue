@@ -1,8 +1,10 @@
 <template>
-  <div id="manageCourse">
-    <h1>添加课程</h1>
+  <div id="addClass">
+    <h1>添加上课时间</h1>
     <div class="main">
-      <div class="left">
+      <div class="left"></div>
+      <div class="right">
+        <div class="title">选择教室：</div>
         <div class="header">
           <div class="day">周一</div>
           <div class="day">周二</div>
@@ -19,6 +21,15 @@
               @click="choose(item,index);"
             ></div>
             <div class="ban" v-if="item.id != ''"></div>
+          </div>
+        </div>
+        <div class="tag">请选择上方对应的上课时间，灰色区块为不可选择上课时间，提交课程后将不能更改。</div>
+        <div class="choose_list">
+          <div class="title">已选时间：</div>
+          <div class="no_chooseData" v-if="chooseData.length == 0">请选课</div>
+          <div class="list" v-for="(item,index) in chooseData" :key="index">
+            <div>{{item.day | toWeek}}</div>
+            <div>第{{item.time}}节</div>
           </div>
         </div>
       </div>
@@ -128,8 +139,8 @@ export default {
       this.data[index].choose = !this.data[index].choose;
       if (this.data[index].choose) {
         let obj = {
-          day: item.day,
-          time: item.time,
+          day: item.day.toString(),
+          time: item.time.toString(),
           index: index
         };
         this.chooseData.push(obj);
@@ -150,57 +161,4 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.main {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-  .left {
-    .header{
-      display: flex;
-      width: 280px;
-      padding: 0 10px;
-      .day{
-        width: 56px;
-        font-size: 14px;
-        text-align: center;
-      }
-    }
-    .choose_card {
-      width: 280px;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      height: 200px;
-      .class {
-        width: 20%;
-        height: 50px;
-        padding: 10px;
-        box-sizing: border-box;
-        .class_inner {
-          height: 100%;
-          border-radius: 5px;
-          border: 2px solid rgba(0, 0, 0, 0.2);
-          cursor: pointer;
-          &:hover {
-            background-color: #67c23a;
-            border: 2px solid #67c23a;
-          }
-        }
-        .ban {
-          height: 100%;
-          border-radius: 5px;
-          border: 2px solid rgba(0, 0, 0, 0.2);
-          background: rgba(0, 0, 0, 0.5);
-          cursor: not-allowed;
-        }
-        .choose {
-          background-color: #67c23a;
-          border: 2px solid #67c23a;
-        }
-      }
-    }
-  }
-}
 </style>

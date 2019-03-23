@@ -35,8 +35,8 @@
               <el-input type="password" v-model="form.password"></el-input>
             </el-form-item>
 
-            <el-form-item label="教师系别" prop="faculity">
-              <el-select v-model="form.faculity" placeholder="请选择" style="width:100%">
+            <el-form-item label="教师系别" prop="faculty">
+              <el-select v-model="form.faculty" placeholder="请选择" style="width:100%">
                 <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
               </el-select>
             </el-form-item>
@@ -88,7 +88,7 @@ export default {
         account: "",
         name: "",
         password: "",
-        faculity: ""
+        faculty: ""
       },
       rules: {
         account: [
@@ -100,7 +100,7 @@ export default {
         password: [
           { required: true, message: "请填写信息", trigger: ["change", "blur"] }
         ],
-        faculity: [{ required: true, message: "请填写信息", trigger: "change" }]
+        faculty: [{ required: true, message: "请填写信息", trigger: "change" }]
       },
       options: ["计算机", "艺术", "外语"],
       value: ""

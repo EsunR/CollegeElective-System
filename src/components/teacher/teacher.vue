@@ -5,7 +5,7 @@
         <user-info class="user_info"></user-info>
         <el-menu
           class="nav_bar"
-          default-active="schoolInfo"
+          default-active="teacherCourse"
           background-color="#1d2b36"
           text-color="#fff"
           active-text-color="#ffd04b"
@@ -15,9 +15,9 @@
             <i class="el-icon-menu"></i>
             <span slot="title">教师课表</span>
           </el-menu-item>
-          <el-menu-item index="manageCourse">
+          <el-menu-item index="addCourse">
             <i class="el-icon-document"></i>
-            <span slot="title">课程管理</span>
+            <span slot="title">添加课程</span>
           </el-menu-item>
           <el-menu-item index="manageGrade">
             <i class="el-icon-setting"></i>

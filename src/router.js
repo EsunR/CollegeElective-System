@@ -11,7 +11,7 @@ import studentCourse from './components/student/studentCourse.vue'
 // teacher
 import teacher from './components/teacher/teacher.vue'
 import teacherCourse from './components/teacher/teacherCourse.vue'
-import manageCourse from './components/teacher/manageCourse.vue'
+import addCourse from './components/teacher/addCourse.vue'
 import manageGrade from './components/teacher/manageGrade.vue'
 
 
@@ -58,8 +58,8 @@ var router = new Router({
           component: teacherCourse
         },
         {
-          path: 'manageCourse',
-          component: manageCourse
+          path: 'addCourse',
+          component: addCourse
         },
         {
           path: 'manageGrade',
