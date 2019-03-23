@@ -46,6 +46,15 @@ Vue.filter('toWeek', function (value) {
   }
 })
 
+Vue.filter('proptype', function(value){
+  switch (value){
+    case '0': 
+      return '选修';
+    case '1':
+      return '必修';
+  }
+})
+
 new Vue({
   router,
   store,

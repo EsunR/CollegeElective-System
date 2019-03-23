@@ -43,8 +43,8 @@
           <el-col :span="8">
             <el-form-item label="课程类别" prop="proptype">
               <el-select v-model="form.proptype" placeholder="请选择">
-                <el-option label="选修" value="选修"></el-option>
-                <el-option label="必修" value="必修"></el-option>
+                <el-option label="必修" value="1"></el-option>
+                <el-option label="选修" value="0"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -124,20 +124,12 @@ export default {
       ],
       rules: {
         courseName: [
-          { required: true, message: "请输入课程名称", trigger: "blur" }
+          { required: true, message: "请输入课程名称", trigger: ["blur","choose"] }
         ],
-        credit: [
-          { required: true, message: "请输入学分", trigger: "blur" }
-        ],
-        semester: [
-          { required: true, message: "请选择", trigger: "blur" }
-        ],
-        facultyId: [
-          { required: true, message: "请选择", trigger: "blur" }
-        ],
-        proptype: [
-          { required: true, message: "请选择", trigger: "blur" }
-        ]
+        credit: [{ required: true, message: "请输入学分", trigger: ["blur","choose"] }],
+        semester: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
+        facultyId: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
+        proptype: [{ required: true, message: "请选择", trigger: ["blur","choose"] }]
       }
     };
   },
@@ -181,16 +173,16 @@ export default {
     },
     getFaculty() {
       this.axios
-        .get('/getFaculty')
+        .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
-            this.faculty = res.data.data
+            this.faculty = res.data.data;
           }
-      })
-      .catch(err => {
-        console.log(err);
-        this.$message('服务器无法连接，无法获取院系列表');
-      });
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接，无法获取院系列表");
+        });
     }
   },
   mounted() {

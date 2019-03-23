@@ -19,6 +19,10 @@
             <i class="el-icon-document"></i>
             <span slot="title">添加课程</span>
           </el-menu-item>
+          <el-menu-item index="addClass">
+            <i class="el-icon-date"></i>
+            <span slot="title">添加上课时间</span>
+          </el-menu-item>
           <el-menu-item index="manageGrade">
             <i class="el-icon-setting"></i>
             <span slot="title">成绩管理</span>
