@@ -39,7 +39,7 @@
         </div>
         <div class="right">
           <div class="title">
-            <span class="step">STEP. 2</span>选择上课时间：
+            <span class="step">STEP. 2</span>请选择上课时间：
           </div>
           <div class="header">
             <div class="day">周一</div>
@@ -279,10 +279,25 @@ export default {
           console.log(err);
           this.$message("添加上课时间失败，服务器无法连接");
         });
+    },
+    getTeacherClass() {
+      // TODO: 获取教师要上的课节
+      this.axios
+        .get("/getTeacherClass?id=" + this.$store.state.uid)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.data = this.parseData(res.data);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
     }
   },
   mounted() {
-    this.data = this.parseData(this.data);
+    this.getTeacherClass()
+    // this.data = this.parseData(this.data);
   }
 };
 </script>

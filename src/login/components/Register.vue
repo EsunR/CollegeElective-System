@@ -27,9 +27,9 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="选择系别" prop="faculty">
-            <el-select style="width:95%" v-model="registerForm.faculty" placeholder="请选择系别">
-              <el-option v-for="item in faculty" :key="item.id" :label="item.name" :value="item.name"></el-option>
+          <el-form-item label="选择系别" prop="faculity">
+            <el-select style="width:95%" v-model="registerForm.faculity" placeholder="请选择系别">
+              <el-option v-for="item in faculity" :key="item.id" :label="item.name" :value="item.name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -73,7 +73,7 @@ export default {
         name: "",
         password: "",
         password2: "",
-        faculty: "",
+        faculity: "",
         enter_time: ""
       },
       rules: {
@@ -83,7 +83,7 @@ export default {
         password2: [
           { validator: validatePassword2, trigger: ["blur", "change"] }
         ],
-        faculty: [
+        faculity: [
           { required: true, message: "请选择系别", trigger: ["blur", "change"] }
         ],
         enter_time: [
@@ -94,7 +94,7 @@ export default {
           }
         ]
       },
-      faculty: [
+      faculity: [
         {
           id: "1",
           name: "计算机"
@@ -118,7 +118,7 @@ export default {
             account: this.registerForm.account,
             password: this.registerForm.password,
             name: this.registerForm.name,
-            faculty: this.registerForm.faculty,
+            faculity: this.registerForm.faculity,
             enterTime: this.parseTime(this.registerForm.enter_time)
           };
           console.log(obj);
@@ -141,12 +141,13 @@ export default {
         }
       });
     },
-    getFaculty() {
+    getfaculity() {
+      // TODO: 获取系别
       this.axios
-        .get("/getFaculty")
+        .get("/getfaculity")
         .then(res => {
           if (res.data.code == 1) {
-            this.faculty = res.data.data;
+            this.faculity = res.data.data;
           }
         })
         .catch(err => {
@@ -160,7 +161,7 @@ export default {
     }
   },
   mounted() {
-    this.getFaculty();
+    this.getfaculity();
   }
 };
 </script>

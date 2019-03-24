@@ -27,7 +27,7 @@
             <i class="el-icon-news"></i>
             <span slot="title">管理教室</span>
           </el-menu-item>
-          <el-menu-item index="manageFaculty">
+          <el-menu-item index="managefaculity">
             <i class="el-icon-edit-outline"></i>
             <span slot="title">管理院系</span>
           </el-menu-item>

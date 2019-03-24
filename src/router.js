@@ -6,6 +6,8 @@ import noFound from './components/noFound'
 // student
 import student from './components/student/student.vue'
 import studentCourse from './components/student/studentCourse.vue'
+import chooseClass from './components/student/chooseClass.vue'
+import studentGrade from './components/student/studentGrade.vue'
 
 
 // teacher
@@ -23,7 +25,7 @@ import schoolInfo from './components/admin/schoolInfo.vue'
 import manageStudent from './components/admin/manageStudent.vue'
 import manageTeacher from './components/admin/manageTeacher.vue'
 import manageClassroom from './components/admin/manageClassroom.vue'
-import manageFaculty from './components/admin/manageFaculty.vue'
+import manageFaculity from './components/admin/manageFaculity.vue'
 
 
 
@@ -48,6 +50,14 @@ var router = new Router({
         {
           path: 'studentCourse',
           component: studentCourse
+        },
+        {
+          path: 'chooseClass',
+          component: chooseClass
+        },
+        {
+          path: 'studentGrade',
+          component: studentGrade
         }
       ]
     },
@@ -100,8 +110,8 @@ var router = new Router({
           component: manageClassroom
         },
         {
-          path: 'manageFaculty',
-          component: manageFaculty
+          path: 'manageFaculity',
+          component: manageFaculity
         }
       ]
     }

@@ -28,10 +28,10 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="课程教授院系" prop="facultyId">
-              <el-select v-model="form.facultyId" placeholder="请选择">
+            <el-form-item label="课程教授院系" prop="faculityId">
+              <el-select v-model="form.faculityId" placeholder="请选择">
                 <el-option
-                  v-for="item in faculty"
+                  v-for="item in faculity"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
@@ -70,7 +70,7 @@ export default {
         courseName: "",
         credit: "",
         semester: "",
-        facultyId: "",
+        faculityId: "",
         proptype: "",
         teacherId: this.$store.state.uid
       },
@@ -108,7 +108,7 @@ export default {
           label: "大四下学期"
         }
       ],
-      faculty: [
+      faculity: [
         {
           id: "1",
           name: "计算机"
@@ -128,7 +128,7 @@ export default {
         ],
         credit: [{ required: true, message: "请输入学分", trigger: ["blur","choose"] }],
         semester: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
-        facultyId: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
+        faculityId: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
         proptype: [{ required: true, message: "请选择", trigger: ["blur","choose"] }]
       }
     };
@@ -171,12 +171,13 @@ export default {
           this.$message("服务器无法连接，添加课程失败");
         });
     },
-    getFaculty() {
+    getfaculity() {
+      // TODO: 获取系别
       this.axios
-        .get("/getFaculty")
+        .get("/getfaculity")
         .then(res => {
           if (res.data.code == 1) {
-            this.faculty = res.data.data;
+            this.faculity = res.data.data;
           }
         })
         .catch(err => {
@@ -186,7 +187,7 @@ export default {
     }
   },
   mounted() {
-    this.getFaculty();
+    this.getfaculity();
   }
 };
 </script>

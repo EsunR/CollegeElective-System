@@ -1,19 +1,19 @@
 <template>
-  <div id="manageFaculty">
+  <div id="managefaculity">
     <h1>管理院系</h1>
     <div class="add_box">
       <div class="title">添加院系</div>
       <el-input
         style="margin-top: 20px;"
         placeholder="输入院系名称"
-        v-model="facultyName"
+        v-model="faculityName"
         class="input-with-select"
       >
         <el-button slot="append" type="primary" icon="el-icon-circle-plus-outline" @click="submit">添加</el-button>
       </el-input>
     </div>
-    <el-row class="faculty_box" :gutter="20">
-      <el-col :xl="8" :md="12" :xs="24" v-for="item in facultyData" :key="item.id">
+    <el-row class="faculity_box" :gutter="20">
+      <el-col :xl="8" :md="12" :xs="24" v-for="item in faculityData" :key="item.id">
         <div class="list light_shadow">{{item.name}}</div>
       </el-col>
     </el-row>
@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      facultyData: [
+      faculityData: [
         {
           id: "1",
           name: "系别名"
@@ -58,17 +58,17 @@ export default {
           name: "系别名"
         }
       ],
-      facultyName: ""
+      faculityName: ""
     };
   },
   methods: {
-    getFaculty() {
+    getfaculity() {
       // TODO: 获取院系
       this.axios
-        .get("/getFaculty")
+        .get("/getfaculity")
         .then(res => {
           if (res.data.code == 1) {
-            this.facultyData = res.data.data;
+            this.faculityData = res.data.data;
           }
         })
         .catch(err => {
@@ -77,13 +77,13 @@ export default {
         });
     },
     submit(){
-      if(this.facultyName != ""){
-        this.$confirm(`您确定要添加“${this.facultyName}”到系统吗？`, '提示', {
+      if(this.faculityName != ""){
+        this.$confirm(`您确定要添加“${this.faculityName}”到系统吗？`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.addFaculty();
+          this.addfaculity();
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -94,25 +94,25 @@ export default {
         this.$message.error('请填写院系名称');
       }
     },
-    addFaculty(){
+    addfaculity(){
       // TODO: 添加院系
       this.axios
-        .post('/addFaculty', {facultyName: this.facultyName})
+        .post('/addfaculity', {faculityName: this.faculityName})
         .then(res => {
           if (res.data.code == 1) {
             this.$message.success('添加成功');
-            this.facultyName = "";
-            this.getFaculty();
+            this.faculityName = "";
+            this.getfaculity();
           }
       })
       .catch(err => {
         console.log(err);
-        this.$message('服务器无法连接');
+        this.$message('服务器无法连接，院系添加失败');
       });
     }
   },
   mounted(){
-    this.getFaculty();
+    this.getfaculity();
   }
 };
 </script>
@@ -132,7 +132,7 @@ export default {
     padding: 20px;
   }
 }
-.faculty_box{
+.faculity_box{
   .list{
     background-color: #409EFF;
     margin-top: 20px;
