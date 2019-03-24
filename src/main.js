@@ -76,6 +76,15 @@ Vue.filter('semester', function (value) {
   }
 })
 
+Vue.filter('status', function (value) {
+  switch (value) {
+    case '1':
+      return '已结课';
+    case '0':
+      return '未结课';
+  }
+})
+
 new Vue({
   router,
   store,

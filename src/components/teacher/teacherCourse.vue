@@ -148,11 +148,19 @@ export default {
           console.log(err);
           this.$message("服务器无法连接");
         });
+    },
+    notify() {
+      this.$notify.info({
+        title: "提示",
+        message: "添加课程并设置上课时间后即可显示教师课表内容",
+        customClass: "notifys",
+        offset: 100
+      });
     }
   },
   mounted() {
     this.getTeacherClass();
-    // this.data = this.parseData(this.data);
+    this.data = this.parseData(this.data);
   }
 };
 </script>
@@ -251,5 +259,9 @@ export default {
       }
     }
   }
+}
+.notifys {
+  background-color: #409eff !important;
+  color: #fff !important;
 }
 </style>

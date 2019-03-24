@@ -14,6 +14,7 @@ import teacherCourse from './components/teacher/teacherCourse.vue'
 import addCourse from './components/teacher/addCourse.vue'
 import addClass from './components/teacher/addClass.vue'
 import manageGrade from './components/teacher/manageGrade.vue'
+import courseGrade from './components/teacher/courseGrade.vue'
 
 
 //  admin
@@ -22,6 +23,7 @@ import schoolInfo from './components/admin/schoolInfo.vue'
 import manageStudent from './components/admin/manageStudent.vue'
 import manageTeacher from './components/admin/manageTeacher.vue'
 import manageClassroom from './components/admin/manageClassroom.vue'
+import manageFaculty from './components/admin/manageFaculty.vue'
 
 
 
@@ -69,6 +71,10 @@ var router = new Router({
         {
           path: 'manageGrade',
           component: manageGrade
+        },
+        {
+          path: 'manageGrade/:id',
+          component: courseGrade
         }
       ]
     },
@@ -92,6 +98,10 @@ var router = new Router({
         {
           path: 'manageClassroom',
           component: manageClassroom
+        },
+        {
+          path: 'manageFaculty',
+          component: manageFaculty
         }
       ]
     }
