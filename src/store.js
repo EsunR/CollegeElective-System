@@ -8,9 +8,9 @@ export default new Vuex.Store({
     uid: 233,
     account: '16031210105',
     name: '张三',
-    identity: 'student',
-    faculity: '计算机',
-    semester: '2'
+    identity: 'admin',
+    faculity: '',
+    semester: ''
   },
   mutations: {
     setData(state, obj) {
