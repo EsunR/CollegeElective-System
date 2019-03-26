@@ -94,20 +94,7 @@ export default {
           }
         ]
       },
-      faculity: [
-        {
-          id: "1",
-          name: "计算机"
-        },
-        {
-          id: "2",
-          name: "英语"
-        },
-        {
-          id: "3",
-          name: "艺术"
-        }
-      ],
+      faculity: [],
     };
   },
   methods: {
@@ -118,11 +105,10 @@ export default {
             account: this.registerForm.account,
             password: this.registerForm.password,
             name: this.registerForm.name,
-            faculity: this.registerForm.faculity,
-            enterTime: this.parseTime(this.registerForm.enter_time)
+            faculty: this.registerForm.faculity,
+            enterTime: this.parseTime(this.registerForm.enter_time).toString()
           };
           console.log(obj);
-          // TODO: 接入注册API
           this.axios
             .post("/register", obj)
             .then(res => {
@@ -142,9 +128,8 @@ export default {
       });
     },
     getfaculity() {
-      // TODO: 获取系别
       this.axios
-        .get("/getfaculity")
+        .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
             this.faculity = res.data.data;

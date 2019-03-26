@@ -9,7 +9,12 @@
         v-model="faculityName"
         class="input-with-select"
       >
-        <el-button slot="append" type="primary" icon="el-icon-circle-plus-outline" @click="submit">添加</el-button>
+        <el-button
+          slot="append"
+          type="primary"
+          icon="el-icon-circle-plus-outline"
+          @click="submit"
+        >添加</el-button>
       </el-input>
     </div>
     <el-row class="faculity_box" :gutter="20">
@@ -24,48 +29,14 @@
 export default {
   data() {
     return {
-      faculityData: [
-        {
-          id: "1",
-          name: "系别名"
-        },
-        {
-          id: "2",
-          name: "系别名"
-        },
-        {
-          id: "3",
-          name: "系别名"
-        },
-        {
-          id: "4",
-          name: "系别名"
-        },
-        {
-          id: "5",
-          name: "系别名"
-        },
-        {
-          id: "6",
-          name: "系别名"
-        },
-        {
-          id: "7",
-          name: "系别名"
-        },
-        {
-          id: "8",
-          name: "系别名"
-        }
-      ],
+      faculityData: [],
       faculityName: ""
     };
   },
   methods: {
     getfaculity() {
-      // TODO: 获取院系
       this.axios
-        .get("/getfaculity")
+        .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
             this.faculityData = res.data.data;
@@ -76,42 +47,43 @@ export default {
           this.$message("服务器无法连接");
         });
     },
-    submit(){
-      if(this.faculityName != ""){
-        this.$confirm(`您确定要添加“${this.faculityName}”到系统吗？`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.addfaculity();
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '操作已取消'
+    submit() {
+      if (this.faculityName != "") {
+        this.$confirm(`您确定要添加“${this.faculityName}”到系统吗？`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.addfaculity();
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "操作已取消"
+            });
           });
-        });
-      }else{
-        this.$message.error('请填写院系名称');
+      } else {
+        this.$message.error("请填写院系名称");
       }
     },
-    addfaculity(){
-      // TODO: 添加院系
+    addfaculity() {
       this.axios
-        .post('/addfaculity', {faculityName: this.faculityName})
+        .post("/addFaculty", { faculityName: this.faculityName })
         .then(res => {
           if (res.data.code == 1) {
-            this.$message.success('添加成功');
+            this.$message.success("添加成功");
             this.faculityName = "";
             this.getfaculity();
           }
-      })
-      .catch(err => {
-        console.log(err);
-        this.$message('服务器无法连接，院系添加失败');
-      });
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接，院系添加失败");
+        });
     }
   },
-  mounted(){
+  mounted() {
     this.getfaculity();
   }
 };
@@ -132,9 +104,9 @@ export default {
     padding: 20px;
   }
 }
-.faculity_box{
-  .list{
-    background-color: #409EFF;
+.faculity_box {
+  .list {
+    background-color: #409eff;
     margin-top: 20px;
     padding: 20px;
     border-color: white;

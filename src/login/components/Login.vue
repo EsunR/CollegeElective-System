@@ -43,13 +43,12 @@ export default {
     loginClick() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          // TODO: 接入注册
+          // TODO: 接入登录
           this.axios
             .post("/login", this.loginForm)
             .then(res => {
               if (res.data.code == 1) {
                 this.$message("登录成功，正在跳转");
-                console.log(res.data);
                 // 记住用户名、密码
                 if (this.rememberPwd) {
                   this.setCookie("account", this.loginForm.account);
@@ -60,7 +59,7 @@ export default {
                 }
                 // 保存token
                 localStorage.setItem("token", res.data.data.token);
-                setTimeout(function() {
+                setTimeout(() => {
                   window.location.href = this.COMMON.index_location;
                 }, 1000);
               } else {
@@ -68,7 +67,7 @@ export default {
               }
             })
             .catch(() => {
-              this.$message("账号不存在");
+              this.$message("服务器连接失败");
             });
         } else {
           return false;

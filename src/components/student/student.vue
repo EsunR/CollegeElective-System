@@ -55,6 +55,11 @@ export default {
     select(index) {
       this.$router.push("/student/" + index);
     }
+  },
+  mounted(){
+    if(this.$store.state.identity != 'student'){
+      this.$router.push('/')
+    }
   }
 };
 </script>

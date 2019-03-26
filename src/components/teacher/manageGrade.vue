@@ -14,7 +14,7 @@
                 <div class="semester">{{item.semester | semester}}</div>
               </div>
               <div class="group">
-                <div class="faculityName">{{item.faculityName}}</div>
+                <div class="faculityName">{{item.faculity}}</div>
               </div>
               <div class="group">
                 <div class="credit">{{item.credit}}学分</div>
@@ -54,78 +54,11 @@
 export default {
   data() {
     return {
-      courseData: [
-        {
-          id: "1",
-          name: "软件工程",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "2",
-          name: "计算机组成原理",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "3",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "4",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "5",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        },
-        {
-          id: "6",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        }
-      ],
-      courseData_finished: [
-        {
-          id: "1",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "2",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        }
-      ]
+      courseData: [],
+      courseData_finished: []
     };
   },
   methods: {
-    // TODO: 获取教师已选课程
     getTeacherCourse() {
       this.axios
         .get("/getTeacherCourse?id=" + this.$store.state.uid)
@@ -139,7 +72,6 @@ export default {
           this.$message("服务器无法连接，获取未结课课程失败");
         });
     },
-    // TODO: 获取教师未结课课程
     getTeacherCourseFinished() {
       this.axios
         .get("/getTeacherCourseFinished?id=" + this.$store.state.uid)

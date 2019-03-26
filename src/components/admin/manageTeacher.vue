@@ -37,7 +37,12 @@
 
             <el-form-item label="教师系别" prop="faculity">
               <el-select v-model="form.faculity" placeholder="请选择" style="width:100%">
-                <el-option v-for="item in options" :key="item" :label="item" :value="item"></el-option>
+                <el-option
+                  v-for="item in options"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.name"
+                ></el-option>
               </el-select>
             </el-form-item>
 
@@ -56,33 +61,12 @@
 export default {
   data() {
     return {
-      teacherData: [
-        {
-          id: "1",
-          account: "122222223",
-          name: "张三"
-        },
-        {
-          id: "2",
-          account: "123222222",
-          name: "李四"
-        },
-        {
-          id: "3",
-          account: "12222223",
-          name: "王麻子"
-        },
-        {
-          id: "4",
-          account: "12222223",
-          name: "王麻子"
-        }
-      ],
+      teacherData: [],
       chartData: {
         columns: ["用户", "数量"],
         rows: [{ 用户: "已展示用户", 数量: 0 }, { 用户: "未展示用户", 数量: 0 }]
       },
-      total: 18,
+      total: 0,
       page: 1,
       form: {
         account: "",
@@ -102,18 +86,21 @@ export default {
         ],
         faculity: [{ required: true, message: "请填写信息", trigger: "change" }]
       },
-      options: ["计算机", "艺术", "外语"],
+      options: [],
       value: ""
     };
   },
   methods: {
     getTeacherData(callback) {
-      // TODO: 获取教师
       this.axios
         .get("/getTeacherData?page=" + this.page)
         .then(res => {
           if (res.data.code == 1) {
-            this.teacherData = res.data.teacherData;
+            this.total = res.data.data.total;
+            this.teacherData = [
+              ...this.teacherData,
+              ...res.data.data.teacherData
+            ];
             callback();
           }
         })
@@ -124,16 +111,18 @@ export default {
     },
     getMore() {
       this.page++;
-      this.getTeacherData();
+      this.getTeacherData(() => {
+        this.chartData.rows[0].数量 = this.teacherData.length;
+        this.chartData.rows[1].数量 = this.total - this.teacherData.length;
+      });
     },
     deleteUser(id, index) {
-      this.$confirm("您确定要删除该学生吗?", "提示", {
+      this.$confirm("您确定要删除该教师吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          // TODO: 删除教师
           this.axios
             .get("/deleteUser?id=" + id)
             .then(res => {
@@ -156,9 +145,8 @@ export default {
         });
     },
     getfaculity() {
-      // TODO: 获取系别
       this.axios
-        .get("/getfaculity")
+        .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
             this.options = res.data.data;
@@ -176,17 +164,25 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // TODO: 添加教师
-          console.log(this.form);
+          let obj = this.form;
+          obj.faculty = this.form.faculity;
           this.axios
-            .post("/addTeacher", this.form)
+            .post("/addTeacher", obj)
             .then(res => {
               if (res.data.code == 1) {
                 this.$message({
                   type: "success",
                   message: "添加成功!"
                 });
+                this.page = 1;
                 this.clearForm();
+                this.getTeacherData(() => {
+                  this.chartData.rows[0].数量 = this.teacherData.length;
+                  this.chartData.rows[1].数量 =
+                    this.total - this.teacherData.length;
+                });
+              } else {
+                this.$message.error("该工号已被注册！");
               }
             })
             .catch(err => {

@@ -43,74 +43,7 @@
 export default {
   data() {
     return {
-      data: [
-        {
-          id: "1",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程计算机概论",
-          teacherName: "小红红"
-        },
-        {
-          id: "2",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "3",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "3",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "4",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "4",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "5",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "3",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "6",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "4",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        }
-      ]
+      data: []
     };
   },
   methods: {
@@ -141,7 +74,7 @@ export default {
         .get("/getTeacherClass?id=" + this.$store.state.uid)
         .then(res => {
           if (res.data.code == 1) {
-            this.data = this.parseData(res.data);
+            this.data = this.parseData(res.data.data);
           }
         })
         .catch(err => {
@@ -160,7 +93,6 @@ export default {
   },
   mounted() {
     this.getTeacherClass();
-    this.data = this.parseData(this.data);
   }
 };
 </script>

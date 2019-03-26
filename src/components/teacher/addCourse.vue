@@ -108,28 +108,27 @@ export default {
           label: "大四下学期"
         }
       ],
-      faculity: [
-        {
-          id: "1",
-          name: "计算机"
-        },
-        {
-          id: "2",
-          name: "英语"
-        },
-        {
-          id: "3",
-          name: "艺术"
-        }
-      ],
+      faculity: [],
       rules: {
         courseName: [
-          { required: true, message: "请输入课程名称", trigger: ["blur","choose"] }
+          {
+            required: true,
+            message: "请输入课程名称",
+            trigger: ["blur", "choose"]
+          }
         ],
-        credit: [{ required: true, message: "请输入学分", trigger: ["blur","choose"] }],
-        semester: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
-        faculityId: [{ required: true, message: "请选择", trigger: ["blur","choose"] }],
-        proptype: [{ required: true, message: "请选择", trigger: ["blur","choose"] }]
+        credit: [
+          { required: true, message: "请输入学分", trigger: ["blur", "choose"] }
+        ],
+        semester: [
+          { required: true, message: "请选择", trigger: ["blur", "choose"] }
+        ],
+        faculityId: [
+          { required: true, message: "请选择", trigger: ["blur", "choose"] }
+        ],
+        proptype: [
+          { required: true, message: "请选择", trigger: ["blur", "choose"] }
+        ]
       }
     };
   },
@@ -157,13 +156,18 @@ export default {
       });
     },
     addCourse() {
-      // TODO: 添加课程
+      let obj = this.form;
+      obj.faculityId = this.form.faculityId.toString();
+      obj.semester = this.form.semester.toString();
+      obj.name = this.form.courseName;
+      console.log(obj);
       this.axios
-        .post("/addCourse", this.form)
+        .post("/addCourse", obj)
         .then(res => {
           if (res.data.code == 1) {
-            this.$message("添加成功");
+            this.$message.success("添加成功，请选择上课时间");
             this.$refs.form.resetFields();
+            this.$router.push("/teacher/addClass");
           }
         })
         .catch(err => {
@@ -172,9 +176,8 @@ export default {
         });
     },
     getfaculity() {
-      // TODO: 获取系别
       this.axios
-        .get("/getfaculity")
+        .get("/getFaculty")
         .then(res => {
           if (res.data.code == 1) {
             this.faculity = res.data.data;

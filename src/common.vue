@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-const host = "http://localhost:8080/api/";
+const host = "http://47.95.196.58:9000/xk/service01/api/";
 
 const login_location = "/login.html"
 const index_location = "/index.html"

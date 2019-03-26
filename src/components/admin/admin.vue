@@ -63,6 +63,11 @@ export default {
     select(index) {
       this.$router.push("/admin/" + index);
     }
+  },
+  mounted(){
+    if(this.$store.state.identity != 'admin'){
+      this.$router.push('/')
+    }
   }
 };
 </script>

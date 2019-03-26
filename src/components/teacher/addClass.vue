@@ -1,5 +1,5 @@
 <template>
-  <div id="addClass">
+  <div id="addClass" v-loading.fullscreen.lock="loading" element-loading-text="系统正在自动分配合适的上课教室">
     <h1>添加上课时间</h1>
     <div class="container">
       <div class="main">
@@ -8,6 +8,7 @@
             <span class="step">STEP. 1</span>选择要添加上课时间的课程：
           </div>
           <div class="left_inner">
+            <div v-if="courseData.length == 0" style="padding-left: 10px;">请添加课程</div>
             <div class="inner" v-for="item in courseData" :key="item.id">
               <div
                 class="course"
@@ -80,128 +81,13 @@
 export default {
   data() {
     return {
-      courseData: [
-        {
-          id: "1",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "2",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "3",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "4",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "5",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        },
-        {
-          id: "6",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        }
-      ],
+      courseData: [],
       // 教师已排的课程
-      data: [
-        {
-          id: "1",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程计算机概论",
-          teacherName: "小红红"
-        },
-        {
-          id: "2",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "3",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "3",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "4",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "4",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "5",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "3",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "6",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "4",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        }
-      ],
+      data: [],
       // 选择的上课时间
       chooseData: [],
-      chooseCourse: ""
+      chooseCourse: "",
+      loading: false
     };
   },
   methods: {
@@ -261,32 +147,53 @@ export default {
         });
     },
     addClass() {
+      this.loading = true;
       let data = this.chooseData;
       for (let i in data) {
         delete data[i].index;
         data[i].courseId = this.chooseCourse;
       }
-      // TODO: 添加课节
-      this.axios
-        .post("/addClass", data)
-        .then(res => {
-          if (res.data.code == 1) {
-            this.$message.success("添加成功");
-            this.$router.push("/teacher");
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.$message("添加上课时间失败，服务器无法连接");
-        });
+
+      for (let i in data) {
+        this.axios
+          .post("/addClass", data[i])
+          .then(res => {
+            if (res.data.code == 1) {
+              if (i == data.length - 1) {
+                setTimeout(() => {
+                  this.loading = false;
+                  this.$message.success("添加成功");
+                  this.$router.push("/teacher");
+                }, 2000);
+              }
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message("服务器无法连接");
+            this.loading = false;
+          });
+      }
     },
     getTeacherClass() {
-      // TODO: 获取教师要上的课节
       this.axios
         .get("/getTeacherClass?id=" + this.$store.state.uid)
         .then(res => {
           if (res.data.code == 1) {
-            this.data = this.parseData(res.data);
+            this.data = this.parseData(res.data.data);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message("服务器无法连接");
+        });
+    },
+    getTeacherCourse() {
+      this.axios
+        .get("/getTeacherCourse?id=" + this.$store.state.uid)
+        .then(res => {
+          if (res.data.code == 1) {
+            this.courseData = res.data.data;
           }
         })
         .catch(err => {
@@ -296,8 +203,8 @@ export default {
     }
   },
   mounted() {
-    this.getTeacherClass()
-    // this.data = this.parseData(this.data);
+    this.getTeacherClass();
+    this.getTeacherCourse();
   }
 };
 </script>

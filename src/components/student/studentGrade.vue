@@ -23,33 +23,7 @@ export default {
   data() {
     return {
       semester: this.$store.state.semester,
-      data: [
-        [
-          {
-            id: "1", // 选课记录id
-            courseId: "2", // 课程id,
-            courseName: "课程名课",
-            grade: "100",
-            credit: "10"
-          },
-          {
-            id: "2", // 选课记录id
-            courseId: "2", // 课程id,
-            courseName: "课程名",
-            grade: "100",
-            credit: "10"
-          }
-        ],
-        [
-          {
-            id: "3", // 选课记录id
-            courseId: "2", // 课程id,
-            courseName: "课程名",
-            grade: "",
-            credit: "10"
-          }
-        ]
-      ]
+      data: []
     };
   },
   methods: {
@@ -60,7 +34,7 @@ export default {
           .get(`/getStudentGrade?id=${this.$store.state.uid}&semester=${i}`)
           .then(res => {
             if (res.data.code == 1) {
-              this.data[i - 1] = res.data.data;
+              this.$set(this.data, i - 1, res.data.data);
             }
           })
           .catch(err => {

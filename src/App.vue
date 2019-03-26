@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"  v-loading.fullscreen.lock="loading" element-loading-text="正在验证用户身份">
     <transition>
       <router-view></router-view>
     </transition>
@@ -8,9 +8,13 @@
 
 <script>
 export default {
+  data() {
+    return {
+      loading: true
+    }
+  },
   methods: {
     getUserInfo(callback) {
-      // TODO: 获取身份
       this.axios
         .get("/userInfo")
         .then(res => {
@@ -26,19 +30,20 @@ export default {
     }
   },
   mounted() {
-    // this.getUserInfo(() => {
-    //   switch (this.$store.state.identity) {
-    //     case "student":
-    //       this.router.push("/student/home");
-    //       break;
-    //     case "teacher":
-    //       this.router.push("/teacher/home");
-    //       break;
-    //     case "admin":
-    //       this.router.push("/admin/home");
-    //       break;
-    //   }
-    // });
+    this.getUserInfo(() => {
+      this.loading = false;
+      switch (this.$store.state.identity) {
+        case "student":
+          this.$router.push("/student");
+          break;
+        case "teacher":
+          this.$router.push("/teacher");
+          break;
+        case "admin":
+          this.$router.push("/admin");
+          break;
+      }
+    });
   }
 };
 </script>

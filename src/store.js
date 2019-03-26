@@ -5,21 +5,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    uid: 233,
-    account: '16031210105',
-    name: '张三',
-    identity: 'admin',
+    uid: '',
+    account: '',
+    name: '',
+    identity: '',
     faculity: '',
     semester: ''
   },
   mutations: {
     setData(state, obj) {
       for (let key in obj) {
-        state[key] = obj[key]
+        if (obj[key] == null) {
+          state[key] = "";
+        } else {
+          state[key] = obj[key].toString();
+        }
       }
     }
   },
   actions: {
-    
+
   }
 })

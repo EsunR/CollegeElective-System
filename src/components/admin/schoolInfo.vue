@@ -36,7 +36,6 @@ export default {
     };
   },
   methods: {
-    // TODO: 获取学校基本信息
     getSchoolInfo(callback) {
       this.axios
         .get("/getSchoolInfo")

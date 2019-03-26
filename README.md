@@ -1,7 +1,7 @@
 ## 1. 基本
 
 ### 1.0 获取系别
-url：/getfaculity GET
+url：/getFaculty GET
 
 返回：
 ```js

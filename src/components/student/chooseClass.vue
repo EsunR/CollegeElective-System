@@ -69,150 +69,9 @@
 export default {
   data() {
     return {
-      classData: [
-        {
-          id: "1",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程计算机概论",
-          teacherName: "小红红"
-        },
-        {
-          id: "2",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "3",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "3",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "4",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "2",
-          time: "4",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "5",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "3",
-          time: "1",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        },
-        {
-          id: "6",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "4",
-          time: "2",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红"
-        }
-      ],
-      courseData: [
-        {
-          id: "1",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "2",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "3",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "4",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "1"
-        },
-        {
-          id: "5",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        },
-        {
-          id: "6",
-          name: "课程名",
-          credit: "10",
-          faculityName: "院系名",
-          semester: "1",
-          proptype: "0"
-        }
-      ],
-      chooseCourseClassData: [
-        {
-          id: "1",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "3",
-          classroom: "A06-201",
-          courseName: "软件工程",
-          teacherName: "小红红",
-          choose: true
-        },
-        {
-          id: "2",
-          courseId: "2",
-          classroomId: "2",
-          teacherId: "1",
-          day: "1",
-          time: "5",
-          classroom: "A06-202",
-          courseName: "软件工程",
-          teacherName: "小红红",
-          choose: true
-        }
-      ],
+      classData: [],
+      courseData: [],
+      chooseCourseClassData: [],
       classTable: [],
       chooseCourse: "",
       flag: true
@@ -220,7 +79,6 @@ export default {
   },
   methods: {
     getStudentClass() {
-      // TODO: 获取教师要上的课节
       this.axios
         .get("/getStudentClass?id=" + this.$store.state.uid)
         .then(res => {
@@ -235,7 +93,6 @@ export default {
         });
     },
     getCourseData() {
-      // TODO: 获取学生可选课程
       this.axios
         .get(
           `/getChooseCourseList?faculity=${
@@ -278,9 +135,6 @@ export default {
     // 连带执行chooseClassToClassData
     choose(id) {
       this.chooseCourse = id;
-      // TODO: 测试代码
-      this.chooseClassToClassData();
-      // TODO: 获取选择课程的课节
       this.axios
         .get("/getClassByCourse?id=" + id)
         .then(res => {
@@ -299,11 +153,12 @@ export default {
       this.classTable = [];
       // 2. 调用parseData填充数据
       this.parseData();
+      this.flag = true;
       // =====初始化课程表=======
 
       for (let i in this.chooseCourseClassData) {
         // 3. 为chooseCourseClassData添加choose属性
-        this.chooseCourseClassData.choose = true;
+        this.chooseCourseClassData[i].choose = true;
         let day = this.chooseCourseClassData[i].day;
         let time = this.chooseCourseClassData[i].time;
         // 5. 将chooseCourseClassData与classData中的数据做比对，如果比对冲突，将this.flag设置为false，并且将冲突的对象添加error: true字段
@@ -324,16 +179,14 @@ export default {
     submit() {
       let obj = {
         uid: this.$store.state.uid.toString(),
-        courseId: this.chooseCourse
+        courseId: this.chooseCourse.toString()
       };
-      // TODO: 学生选课
       this.axios
         .post("/chooseCourse", obj)
         .then(res => {
           if (res.data.code == 1) {
-            this.chooseCourse = "";
-            this.classTable = [];
-            this.parseData();
+            this.$message.success("选课成功");
+            this.$router.push("/student");
           }
         })
         .catch(err => {
@@ -345,8 +198,6 @@ export default {
   mounted() {
     this.getStudentClass(); //连带执行parseData
     this.getCourseData();
-    // TODO: 删除测试代码
-    this.parseData();
   }
 };
 </script>

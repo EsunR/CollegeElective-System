@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import global from './common.vue'
+import global from './common.vue'
 import noFound from './components/noFound'
+import index from './components/index.vue'
+
 
 // student
 import student from './components/student/student.vue'
@@ -41,6 +43,10 @@ var router = new Router({
       path: '*',
       name: 'noFound',
       component: noFound
+    },
+    {
+      path: '/',
+      component: index
     },
     {
       path: '/student',
@@ -120,11 +126,10 @@ var router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (localStorage.getItem('token')) {
-    console.log("get success");
     next();
   } else {
     console.log("no token!");
-    // window.location.href = global.login_location
+    window.location.href = global.login_location
     next();
   }
 })

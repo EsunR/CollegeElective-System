@@ -68,7 +68,7 @@ export default {
   methods: {
     // 要在data被挂在前，拦截res.data的数据，然后添加res.data.color属性，再挂载到this.data上
     renderCard(data) {
-      let color = ["#72D8CA", "#6399BB", "#6399BB", "#D5836D", "#006484"];
+      let color = ["#FF4366", "#FC9D9B", "#FACDAE", "#C9C8AA", "#84AF9B"];
       for (let i in data) {
         let num = data[i].location.split("-")[0].substr(1);
         let index = parseInt(num) % 5;
@@ -76,13 +76,12 @@ export default {
       }
       return data;
     },
-    // TODO: 获取教室列表
-    getData(callback) {
+    getData() {
       this.axios
         .get("/getClassroom")
         .then(res => {
           if (res.data.code == 1) {
-            callback(res.data.data);
+            this.data = this.renderCard(res.data.data);
           }
         })
         .catch(err => {
@@ -113,9 +112,8 @@ export default {
     },
     addClassroom() {
       let obj = {
-        classroom: `${this.select}-${this.number}`
+        location: `${this.select}-${this.number}`
       };
-      // TODO: 添加教室
       console.log(obj);
       this.axios
         .post("/addClassroom", obj)
@@ -124,6 +122,7 @@ export default {
             this.$message("添加成功");
             this.select = "";
             this.number = "";
+            this.getData();
           }
         })
         .catch(err => {
@@ -133,9 +132,7 @@ export default {
     }
   },
   mounted() {
-    // this.getData((data)=>{
-    //   this.data = this.renderCard(data)
-    // })
+    this.getData();
   }
 };
 </script>

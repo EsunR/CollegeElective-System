@@ -34,48 +34,26 @@
 export default {
   data() {
     return {
-      studentData: [
-        {
-          id: "1",
-          account: "122222223",
-          name: "张三",
-          faculity: "计算机"
-        },
-        {
-          id: "2",
-          account: "123222222",
-          name: "李四",
-          faculity: "计算机"
-        },
-        {
-          id: "3",
-          account: "12222223",
-          name: "王麻子",
-          faculity: "计算机"
-        },
-        {
-          id: "4",
-          account: "12222223",
-          name: "王麻子",
-          faculity: "计算机"
-        }
-      ],
+      studentData: [],
       chartData: {
         columns: ["用户", "数量"],
         rows: [{ 用户: "已展示用户", 数量: 0 }, { 用户: "未展示用户", 数量: 0 }]
       },
-      total: 18,
+      total: 0,
       page: 1
     };
   },
   methods: {
     getStudentData(callback) {
-      // TODO: 获取学生
       this.axios
         .get("/getStudentData?page=" + this.page)
         .then(res => {
           if (res.data.code == 1) {
-            this.studentData = res.data.studentData;
+            this.total = res.data.total;
+            this.studentData = [
+              ...this.studentData,
+              ...res.data.data.studentData
+            ];
             callback();
           }
         })
@@ -86,7 +64,10 @@ export default {
     },
     getMore() {
       this.page++;
-      this.getStudentData();
+      this.getStudentData(() => {
+        this.chartData.rows[0].数量 = this.teacherData.length;
+        this.chartData.rows[1].数量 = this.total - this.teacherData.length;
+      });
     },
     deleteUser(id, index) {
       this.$confirm("您确定要删除该学生吗?", "提示", {
@@ -95,14 +76,13 @@ export default {
         type: "warning"
       })
         .then(() => {
-          // TODO: 删除学生
           this.axios
             .get("/deleteUser?id=" + id)
             .then(res => {
               if (res.data.code == 1) {
                 this.total--;
                 this.studentData.splice(index, 1);
-                this.$message('删除成功！');
+                this.$message("删除成功！");
               }
             })
             .catch(err => {
