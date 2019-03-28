@@ -1,8 +1,9 @@
-# 基于SpringCloud的高校选课系统 Vue+Spring cloud高校选课系统
-
-![](http://ww1.sinaimg.cn/large/a71efaafly1g1hqmxzsl6j20k00cbt9c.jpg)
 
 ## NOTICE
+> 课题：基于SpringCloud的高校选课系统 Vue+Spring cloud高校选课系统
+
+![](http://ww1.sinaimg.cn/large/a71efaafly1g1i8zilha0j215a0pedkf.jpg)
+
 /src/commom.vue中存放全局变量：
 - host：API服务器地址
 - login_location：登录页面相对于服务器根目录的地址
@@ -11,7 +12,7 @@
 ![](https://img.shields.io/badge/Base-Vue2.2-brightgreen.svg)
 ![](https://img.shields.io/badge/Build-Vue--Cli3-orange.svg)
 ![](https://img.shields.io/badge/Design-ElementUI-blue.svg) 
-
+![](https://img.shields.io/badge/Installer-Yarn-red.svg)
 
 # 需求分析
 ## 用户身份
